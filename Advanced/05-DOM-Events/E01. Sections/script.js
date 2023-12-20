@@ -8,9 +8,7 @@ function create(words) {
         p.textContent = word;
         div.appendChild(p);
         p.style.display = 'none';
-
         div.addEventListener('click', reveal);
-
         content.appendChild(div);
     }
 

@@ -1,7 +1,6 @@
 
 import { e } from "./common.js";
-import { getRecipeById } from "./api.js";
-import { getRecipes } from "./api.js";
+import * as api from "./api.js";
 import { setCurrentPage } from "./app.js";
 
 
@@ -35,7 +34,7 @@ export function createRecipePreview(recipe) {
     return result;
 
     async function toggleCard() {
-        const fullRecipe = await getRecipeById(recipe._id);
+        const fullRecipe = await api.getRecipeById(recipe._id);
 
         result.replaceWith(createRecipeCard(fullRecipe));
     }
@@ -59,7 +58,7 @@ export function navigation() {
 export async function cards() {
     const main = document.querySelector('main');
 
-    const recipes = await getRecipes();
+    const recipes = await api.getRecipes();
     const cards = recipes.map(createRecipePreview);
 
     main.innerHTML = '';

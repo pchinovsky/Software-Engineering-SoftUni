@@ -30,7 +30,7 @@ function handleMonth(e) {
         return;
     } else if (e.target.tagName === 'CAPTION') {
         years.style.display = 'block';
-        last.style.display = 'none';
+        last.style.display = 'none';5
         last = years;
         return;
     }

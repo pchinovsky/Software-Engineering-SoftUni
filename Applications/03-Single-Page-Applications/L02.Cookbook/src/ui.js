@@ -2,7 +2,7 @@
 import { e } from "./common.js";
 import { getRecipeById } from "./api.js";
 import { getRecipes } from "./api.js";
-import { currentPage, setCurrentPage } from "./app.js";
+import { setCurrentPage } from "./app.js";
 
 
 
@@ -77,7 +77,6 @@ export function toggleVis() {
                 if (sec.id === sectionId) {
                     sec.style.display = 'block';
                     setCurrentPage(sec.id);
-                    console.log(currentPage);
                 } else {
                     sec.style.display = 'none';
                 }

@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="static/site.css">
     <link rel="stylesheet" href="static/recipe.css">
     <link rel="stylesheet" href="static/form.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"> 
+    <!-- online icon library -->
 </head>
 
 <body>
@@ -96,6 +98,31 @@
             </article>
         </main>
     </section>
+
+    <section id="edit" class="hidden">
+        <header>
+            <h1>My Cookbook</h1>
+            <nav>
+                <a class="btn" data-section="cat">Catalog</a>
+                <a class="active">Update Recipe</a>
+            </nav>
+        </header>
+        <main>
+            <article>
+                <h2>Edit Recipe</h2>
+                <form id="editForm">
+                    <label>Name: <input type="text" name="name" placeholder="Recipe name"></label>
+                    <label>Image: <input type="text" name="img" placeholder="Image URL"></label>
+                    <label class="ml">Ingredients: <textarea name="ingredients"
+                            placeholder="Enter ingredients on separate lines"></textarea></label>
+                    <label class="ml">Preparation: <textarea name="steps"
+                            placeholder="Enter preparation steps on separate lines"></textarea></label>
+                    <input type="submit" value="Create Recipe">
+                </form>
+            </article>
+        </main>
+    </section>
+
     <script src="src/app.js" type="module"></script>
     <script src="src/ui.js" type="module"></script>
     <script src="src/auth.js" type="module"></script>

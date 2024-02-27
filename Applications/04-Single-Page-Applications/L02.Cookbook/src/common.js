@@ -8,6 +8,7 @@ export function e(type, attributes, ...content) {
             result.addEventListener(attr.substring(2).toLocaleLowerCase(), value);
         } else {
             result[attr] = value;
+            // result.setAttribute(attr, value);
         }
     }
 

@@ -1,6 +1,9 @@
 import * as api from "./api.js";
 import { currentPage, setCurrentPage } from "./app.js";
 
+// export async function onEdit() {
+//     console.log('yes');
+// }
 
 export function onLogout(e) {
     e.preventDefault();
@@ -63,7 +66,6 @@ export async function onCre(e) {
     data.steps = data.steps.split('\n');
 
     try {
-
         const res = await api.creRecipeApi(data);
         document.getElementById(currentPage).style.display = 'none';
         document.querySelector('#cat').style.display = 'block';

@@ -74,3 +74,25 @@ a.active {
 .hidden {
     display: none;
 }
+
+.recipeBtn {
+    display: inline-block;
+    background-color: salmon;
+    padding: 8px 16px;
+    margin: 0 8px;
+    text-decoration: none;
+    color: black;
+    display: none;
+}
+
+.recipeBtn:hover {
+    background-color: #6c8b47;
+    color: white;
+    cursor: pointer;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end; 
+    padding: 16px 0; 
+}

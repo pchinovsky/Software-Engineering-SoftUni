@@ -44,6 +44,11 @@ function cre() {
     creForm.addEventListener('submit', auth.onCre);
 }
 
+// function edit() {
+//     const editBtn = document.getElementById('editBtn');
+//     editBtn.addEventListener
+// }
+
 
 
 

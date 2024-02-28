@@ -36,8 +36,6 @@ export function createRecipeCard(recipe) {
         e('div', { className: 'button-container' }, editButton, delButton)
     );
 
-    // const recipeBtn = document.querySelector('.recipeBtn');
-    // console.log(recipeBtn);
     toggleRecipeBtns();
 
     return result;
@@ -68,11 +66,9 @@ export function navigation() {
     if (token !== null) {
         guest.style.display = 'none';
         user.style.display = 'block';
-        // recipeBtns.forEach(btn => btn.style.display = 'block');
     } else {
         guest.style.display = 'block';
         user.style.display = 'none';
-        // recipeBtns.forEach(btn => btn.style.display = 'none');
     }
 
     toggleRecipeBtns();
@@ -125,8 +121,6 @@ async function toggleSections(e) {
 }
 
 function populateEdit(recipeData) {
-
-    // console.log(recipeData);
 
     let name = document.querySelector('#editForm [name="name"]');
     let img = document.querySelector('#editForm [name="img"]');

@@ -103,9 +103,6 @@ export async function onCre(e) {
 export async function onDel(e) {
     e.preventDefault();
 
-    // console.log(e.currentTarget);
-    // console.log(`onDel - ${e.target.dataset.id}`);
-
     const recipeId = e.target.dataset.id;
 
     try {

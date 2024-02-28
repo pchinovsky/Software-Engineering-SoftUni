@@ -1,16 +1,15 @@
 
 const urlBase = 'http://localhost:3030';
 
-
 export async function getRecipes() {
-    const response = await fetch('http://localhost:3030/data/recipes?select=_id%2Cname%2Cimg');
+    const response = await fetch(`${urlBase}/data/recipes?select=_id%2Cname%2Cimg`);
     const recipes = await response.json();
 
     return Object.values(recipes);
 }
 
 export async function getRecipeById(id) {
-    const response = await fetch('http://localhost:3030/data/recipes/' + id);
+    const response = await fetch(`${urlBase}/data/recipes/` + id);
     const recipe = await response.json();
 
     return recipe;
@@ -118,7 +117,7 @@ export async function delRecipeApi(id) {
 
     try {
         console.log(sessionStorage.getItem('token'));
-        
+
         const res = await fetch(`${urlBase}/data/recipes/` + id, method);
         if (!res.ok) {
             throw new Error(`HTTP Error! Status: ${res.status}`);

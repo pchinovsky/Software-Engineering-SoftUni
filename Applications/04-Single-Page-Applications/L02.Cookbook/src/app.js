@@ -21,6 +21,8 @@ async function onLoad() {
     log();
     logout();
     cre();
+    update();
+    del();
 
 }
 
@@ -44,10 +46,16 @@ function cre() {
     creForm.addEventListener('submit', auth.onCre);
 }
 
-// function edit() {
-//     const editBtn = document.getElementById('editBtn');
-//     editBtn.addEventListener
-// }
+function update() {
+    const editForm = document.getElementById('editForm');
+    editForm.addEventListener('submit', auth.onUpdate);
+}
+
+function del() {
+    const delBtn = document.getElementById('del');
+    delBtn.addEventListener('click', auth.onDel);
+}
+
 
 
 

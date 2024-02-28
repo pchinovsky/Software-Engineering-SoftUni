@@ -2,15 +2,23 @@
 import { e } from "./common.js";
 import * as api from "./api.js";
 import { setCurrentPage } from "./app.js";
+import * as auth from "./auth.js";
 
 
 
 
 export function createRecipeCard(recipe) {
     const editIcon = e('i', { className: 'fas fa-edit' });
-    const editButton = e('a', { className: 'recipeBtn', 'data-section': 'edit' }, editIcon, ' Edit');
+    const editButton = e('a', { className: 'recipeBtn' }, editIcon, ' Edit');
+    editButton.setAttribute('data-section', 'edit');
+    editButton.setAttribute('data-id', recipe._id);
+    // attaching recipe id to edit button to be available to the onUpdate func
+    editButton.addEventListener('click', toggleSections);
     const delIcon = e('i', { className: 'fas fa-trash' });
     const delButton = e('a', { className: 'recipeBtn', id: 'del' }, delIcon, ' Delete');
+    delButton.setAttribute('data-id', recipe._id);
+    delButton.addEventListener('click', auth.onDel);
+
 
     const result = e('article', {},
         e('h2', {}, recipe.name),
@@ -20,7 +28,7 @@ export function createRecipeCard(recipe) {
                 e('h3', {}, 'Ingredients:'),
                 e('ul', {}, recipe.ingredients.map(i => e('li', {}, i))),
             )
-        ), 
+        ),
         e('div', { className: 'description' },
             e('h3', {}, 'Preparation:'),
             recipe.steps.map(s => e('p', {}, s))
@@ -92,42 +100,51 @@ export async function cards() {
     cards.forEach(c => main.appendChild(c));
 }
 
-export function toggleVis() {
-    let links = document.querySelectorAll('a');
-    links.forEach(link => {
-        link.addEventListener('click', function (e) {
-            e.preventDefault();
-            let sectionId = this.getAttribute('data-section');
-            let sections = document.querySelectorAll('section');
-            sections.forEach(sec => {
-                if (sec.id === sectionId) {
-                    sec.style.display = 'block';
-                    setCurrentPage(sec.id);
-                } else {
-                    sec.style.display = 'none';
-                }
-            })
-        })
+async function toggleSections(e) {
+    e.preventDefault();
+    let sectionId = this.getAttribute('data-section');
+    let sections = document.querySelectorAll('section');
+
+    const recipeId = e.target.dataset.id;
+    sessionStorage.setItem('currentRecipeId', recipeId);
+
+    if (e.target.textContent === ' Edit') {
+        console.log('=== edit');
+        const data = await api.getRecipeById(recipeId);
+        populateEdit(data);
+    }
+
+    sections.forEach(sec => {
+        if (sec.id === sectionId) {
+            sec.style.display = 'block';
+            setCurrentPage(sec.id);
+        } else {
+            sec.style.display = 'none';
+        }
     })
 }
 
-// export function toggleVis() {
-//     let links = document.querySelectorAll('a');
-//     links.forEach(link => {
-//         link.addEventListener('click', function (e) {
-//             e.preventDefault();
-//             let sectionId = this.getAttribute('id');
-//             let sections = document.querySelectorAll('section');
-//             sections.forEach(sec => {
-//                 if (`#${sec.id}` === sectionId) {
-//                     sec.style.display = 'block';
-//                     setCurrentPage(sec.id);
-//                 } else {
-//                     sec.style.display = 'none';
-//                 }
-//             })
-//         })
-//     })
-// }
+function populateEdit(recipeData) {
+
+    // console.log(recipeData);
+
+    let name = document.querySelector('#editForm [name="name"]');
+    let img = document.querySelector('#editForm [name="img"]');
+    let ingrs = document.querySelector('#editForm [name="ingredients"]');
+    let steps = document.querySelector('#editForm [name="steps"]');
+
+    name.value = recipeData.name;
+    img.value = recipeData.img;
+    ingrs.value = recipeData.ingredients.join('\n');
+    steps.value = recipeData.steps.join('\n');
+}
+
+export function toggleVis() {
+    let links = document.querySelectorAll('a');
+    links.forEach(link => {
+        link.addEventListener('click', toggleSections);
+    })
+}
+
 
 

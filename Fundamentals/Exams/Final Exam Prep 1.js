@@ -9,7 +9,6 @@ function ops(input) {
                 temp.splice(ind, 0, str);
                 stops = temp.join('');
             }
-            console.log(stops);
         },
         'Remove Stop': (els) => {
             const indStart = Number(els[1]);
@@ -17,14 +16,12 @@ function ops(input) {
             if (indStart >= 0 && indEnd < stops.length) {
                 stops = stops.slice(0, indStart) + stops.slice(indEnd);
             }
-            console.log(stops);
         },        
         'Switch': ([, oldStr, newStr]) => {
             if (stops.includes(oldStr)) {
                 const regex = new RegExp(oldStr, 'g');
                 stops = stops.replace(regex, newStr);
             }
-            console.log(stops);
         },  
     };
 
@@ -34,6 +31,8 @@ function ops(input) {
         const els = com.split(':');
         console.log(els);
         operations[oper](els);
+
+        console.log(stops);
 
         com = input.shift();
     }

@@ -14,7 +14,6 @@ cancel.addEventListener('click', onCancel);
 homeBtn.addEventListener('click', showHome);
 
 
-
 function showHome() {
     home.style.display = 'block';
     topic.style.display = 'none';
@@ -24,7 +23,6 @@ function showHome() {
 async function loadTopics() {
     try {
         const data = await request(url, 'GET');
-        // replaceChildren accepts multiple args (div1, div2), so spread oper gives separate divs, instead of an arr of divs. 
         topics.replaceChildren(...Object.values(data).map(post => topicTemplHome(post)));
 
     } catch (error) {
@@ -36,7 +34,6 @@ async function onSubmit(e) {
     e.preventDefault();
     const date = new Date().toUTCString();
     const formData = new FormData(e.target);
-    // to trim all data points. 
     const data = Object.fromEntries(
         Array.from(formData.entries()).map(([key, value]) => [key, value.trim()])
     );

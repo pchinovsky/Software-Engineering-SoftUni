@@ -1,6 +1,5 @@
 import * as lib from '../lib.js';
 import { onCre } from '../api/auth.js';
-import { isValid } from '../api/auth.js';
 
 
 export function setupCre(root, isValid = {}) {

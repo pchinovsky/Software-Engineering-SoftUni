@@ -1,10 +1,10 @@
-import { getItemDetails, onDel } from '../api/auth.js';
+import * as auth from '../api/auth.js';
 import * as lib from '../lib.js';
 
 
 export async function setupDetails(ctx, root) {
-    const data = await getItemDetails(ctx.params.id);
-    const els = templDetails(data, ctx.params.id, onDel);
+    const data = await auth.getItemDetails(ctx.params.id);
+    const els = templDetails(data, ctx.params.id, auth.onDel);
     lib.render(els, root);
 }
 

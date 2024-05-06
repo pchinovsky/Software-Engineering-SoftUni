@@ -1,14 +1,14 @@
 import * as lib from '../lib.js';
-import { getItems, getUserItems } from '../api/auth.js';
+import * as auth from '../api/auth.js';
 
 
 export async function setupCat({root, filter}) {
     let data;
     if (filter) {
         const id = localStorage.getItem('userId');
-        data = await getUserItems(id);
+        data = await auth.getUserItems(id);
     } else {
-        data = await getItems();
+        data = await auth.getItems();
     }
     const els = templCat(data, filter);
     lib.render(els, root);

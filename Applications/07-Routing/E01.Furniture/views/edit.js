@@ -1,9 +1,9 @@
 import * as lib from '../lib.js';
-import { getItemDetails, onUpdate } from '../api/auth.js';
+import * as auth from '../api/auth.js';
 
 
 export async function setupEdit({ctx, root, isValid = {}}) {
-    const data = await getItemDetails(ctx.params.id);
+    const data = await auth.getItemDetails(ctx.params.id);
     const els = templEdit(data, ctx.params.id, isValid);
     lib.render(els, root);
 }
@@ -16,7 +16,7 @@ function templEdit(data, id, isValid) {
                 <p>Please fill all fields.</p>
             </div>
         </div>
-        <form @submit=${(e) => {onUpdate(e, id)}}>
+        <form @submit=${(e) => {auth.onUpdate(e, id)}}>
             <div class="row space-top">
                 <div class="col-md-4">
                     <div class="form-group">

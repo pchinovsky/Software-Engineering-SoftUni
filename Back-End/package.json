@@ -1,0 +1,19 @@
+{
+  "name": "b---express",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --ignore db.json index.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "express-handlebars": "^8.0.1",
+    "nodemon": "^3.1.9",
+    "path": "^0.12.7"
+  }
+}

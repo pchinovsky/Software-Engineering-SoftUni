@@ -1,0 +1,20 @@
+// debug config - node.js nodemon setup auto, changing name and main file path - 
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "console": "integratedTerminal",
+        "internalConsoleOptions": "neverOpen",
+        "name": "Debug",
+        "program": "${workspaceFolder}/index.js",
+        "request": "launch",
+        "restart": true,
+        "runtimeExecutable": "nodemon",
+        "skipFiles": [
+            "<node_internals>/**"
+        ],
+        "type": "node"
+      }
+    ]
+  }
+  

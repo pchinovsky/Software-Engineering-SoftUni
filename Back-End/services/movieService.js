@@ -1,6 +1,8 @@
 import movieData from "../data/movieData.js";
 
+// could unite with the search fn - 
 const getAll = () => movieData.getAll();
+
 const getOne = async (id) => {
     const movies = await getAll();
     const movie = movies.find(m => m.id === id);

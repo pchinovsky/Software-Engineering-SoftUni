@@ -25,17 +25,21 @@ router.get('/details/:id', async (req, res) => {
 });
 
 router.get('/search', async (req, res) => {
-    const movies = await movieService.getAll();
+    console.log('search query - ', req.query);
 
-    res.render('search', { movies });
-});
-
-router.post('/search', async (req, res) => {
-    const query = req.body;
+    const query = req.query;
+    // const movies = await movieService.getAll();
     const movies = await movieService.search(query);
-    console.log(query);
 
-    res.render('search', { movies });
+    res.render('search', { movies, query });
 });
+
+// router.post('/search', async (req, res) => {
+//     const query = req.body;
+//     const movies = await movieService.search(query);
+//     console.log(query);
+
+//     res.render('search', { movies });
+// });
 
 export default router;

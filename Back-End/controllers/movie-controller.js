@@ -13,5 +13,4 @@ router.post('/create', async (req, res) => {
     res.redirect('/');
 });
 
-
 export default router;

@@ -1,11 +1,10 @@
-import express from 'express';
 import { Router } from 'express';
 import movieService from '../services/movieService.js';
 const router = Router();
 
 router.get('/', async (req, res) => {
     // no need to specify layout as default is main
-    const movies = await movieService.getAll();
+    const movies = await movieService.getAll().lean();
     // console.log(movies);
 
     res.render('home', { movies });
@@ -15,9 +14,12 @@ router.get('/about', (req, res) => {
     res.render('about');
 });
 
+// details route not working - 
 router.get('/details/:id', async (req, res) => {
-    const id = Number(req.params.id);
-    const movie = await movieService.getOne(id);
+    const id = req.params.id;
+    console.log('id - ', id);
+
+    const movie = await movieService.getOne(id).lean();
     console.log(movie);
 
 
@@ -29,7 +31,7 @@ router.get('/search', async (req, res) => {
 
     const query = req.query;
     // const movies = await movieService.getAll();
-    const movies = await movieService.search(query);
+    const movies = await movieService.search(query).lean();
 
     res.render('search', { movies, query });
 });

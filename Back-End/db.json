@@ -1,7 +1,7 @@
 {
   "movies": [
     {
-      "id": 1,
+      "_id": 1,
       "title": "Inception",
       "genre": "Sci-Fi",
       "director": "Christopher Nolan",
@@ -11,7 +11,7 @@
       "description": "A mind-bending thriller about dreams within dreams."
     },
     {
-      "id": 2,
+      "_id": 2,
       "title": "The Shawshank Redemption",
       "genre": "Drama",
       "director": "Frank Darabont",
@@ -21,7 +21,7 @@
       "description": "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency."
     },
     {
-      "id": 3,
+      "_id": 3,
       "title": "The Godfather",
       "genre": "Drama",
       "director": "Francis Ford Coppola",
@@ -38,7 +38,7 @@
       "imageURL": "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg",
       "rating": "10",
       "description": "The best ever. ",
-      "id": 1734797058196
+      "_id": 1734797058196
     }
   ]
 }

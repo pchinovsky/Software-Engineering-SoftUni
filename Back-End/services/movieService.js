@@ -1,21 +1,19 @@
-import movieData from "../data/movieData.js";
+import Movie from "../models/movieModel.js";
 
 // could unite with the search fn - 
-const getAll = () => movieData.getAll();
+const getAll = () => Movie.find();
 
-const getOne = async (id) => {
-    const movies = await getAll();
-    const movie = movies.find(m => m.id === id);
-    movie.stars = Math.floor(movie.rating / 2);
-    return movie;
-};
+const getOne = (id) => Movie.findById(id);
 
-const create = (movie) => {
+// const getOne = async (id) => {
+//     const movies = await getAll();
+//     const movie = movies.find(m => m.id === id);
+//     movie.stars = Math.floor(movie.rating / 2);
+//     return movie;
+// };
 
-    const id = new Date().getTime();
-    movie.id = id;
-    return movieData.create(movie);
-
+const createMovie = async (movie) => {
+    return await Movie.create(movie);
 };
 
 const search = async (query) => {
@@ -52,6 +50,6 @@ const search = async (query) => {
 export default {
     getAll,
     getOne,
-    create,
+    createMovie,
     search
 }

@@ -45,7 +45,10 @@
                     <h1>{{name}}</h1>
                     <h3>Age: {{age}}</h3>
                     <h3>Born: {{born}}</h3>
-                    <h3>Character Name: {{getCharacterName this.characters ../movie._id}}</h3>
+                    {{!-- <h3>Character Name: {{getCharacterName this.characters ../movie._id}}</h3> --}}
+                    {{#each characters}}
+                        <h3>Character Name: {{characterName}}</h3>
+                    {{/each}}
                 </div>
             </div>
         {{/each}}

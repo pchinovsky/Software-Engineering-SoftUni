@@ -2,7 +2,8 @@ import mongoose from "mongoose";
 
 const characterSchema = new mongoose.Schema({
     movie: { type: mongoose.Types.ObjectId, ref: 'Movie', required: true },
-    characterName: { type: String, required: true }
+    characterName: { type: String, required: true },
+    _id: false,
 });
 
 const castSchema = new mongoose.Schema({

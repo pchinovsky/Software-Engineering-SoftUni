@@ -3,7 +3,21 @@ import Movie from "../models/movieModel.js";
 // could unite with the search fn - 
 const getAll = () => Movie.find();
 
-const getOne = (id) => Movie.findById(id).populate('casts');
+// const getOne = (id) => Movie.findById(id).populate('casts');
+
+// controlled population - only include characters for this movie
+// simplifies templ display
+const getOne = (id) => {
+    return Movie.findById(id)
+        .populate({
+            path: 'casts',
+            populate: {
+                path: 'characters',
+                match: { movie: id },
+                select: 'characterName',
+            }
+        })
+};
 
 // const getOne = (id) => {
 //     Movie.findById(id)

@@ -3,7 +3,18 @@ import Movie from "../models/movieModel.js";
 // could unite with the search fn - 
 const getAll = () => Movie.find();
 
-const getOne = (id) => Movie.findById(id);
+const getOne = (id) => Movie.findById(id).populate('casts');
+
+// const getOne = (id) => {
+//     Movie.findById(id)
+//         .then(movie => {
+//             movie.stars = Math.floor(movie.rating / 2);
+//             movie.casts = movie.casts.map(c => c.name).join(', ');
+//             return movie;
+//         });
+
+// };
+
 
 // const getOne = async (id) => {
 //     const movies = await getAll();

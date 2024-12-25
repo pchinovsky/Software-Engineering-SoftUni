@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import movieService from '../services/movieService.js';
+import castService from '../services/castService.js';
 const router = Router();
 
 router.get('/', async (req, res) => {
@@ -14,15 +15,18 @@ router.get('/about', (req, res) => {
     res.render('about');
 });
 
-// details route not working - 
 router.get('/details/:id', async (req, res) => {
     const id = req.params.id;
-    console.log('id - ', id);
+    // console.log('id - ', id);
 
     const movie = await movieService.getOne(id).lean();
-    console.log(movie);
+    // console.log(movie);
 
+    // direct casts access without .populate();
+    const castsAll = await castService.getAll().lean();
+    const movieCasts = movie.casts?.map(castId => castsAll.find(cast => cast._id.toString() === castId.toString()));
 
+    // res.render('details', { movie, movieCasts });
     res.render('details', { movie });
 });
 

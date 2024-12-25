@@ -16,7 +16,8 @@ router.post('/create', async (req, res) => {
 router.get('/attach/:id', async (req, res) => {
     const id = req.params.id;
     const movie = await movieService.getOne(id).lean();
-    const casts = await castService.getAll().lean();
+    // const casts = await castService.getAll().lean();
+    const casts = await castService.getAvailable(movie).lean();
 
     res.render('casts/attach', { movie, casts });
 });

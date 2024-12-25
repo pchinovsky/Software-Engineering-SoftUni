@@ -3,6 +3,11 @@ import Movie from "../models/movieModel.js";
 
 const getAll = () => Cast.find();
 
+const getAvailable = (movie) => Cast.find(
+    // $nin - not in
+    { _id: { $nin: movie.casts } }
+);
+
 const createCast = (castData) => Cast.create(castData);
 
 const attach = (movieId, castId) => {
@@ -25,6 +30,7 @@ const attach = (movieId, castId) => {
 
 export default {
     getAll,
+    getAvailable,
     createCast,
     attach
 }

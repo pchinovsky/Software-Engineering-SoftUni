@@ -24,9 +24,17 @@ router.get('/attach/:id', async (req, res) => {
 
 router.post('/attach/:id', async (req, res) => {
     const movieId = req.params.id;
+    // const castId = req.body.cast;
+
+    const character = req.body.character;
     const castId = req.body.cast;
 
-    await castService.attach(movieId, castId);
+    console.log('castId - ', castId);
+    console.log('character - ', character);
+
+
+
+    await castService.attach(movieId, castId, character);
 
     res.redirect(`/details/${movieId}`);
 });

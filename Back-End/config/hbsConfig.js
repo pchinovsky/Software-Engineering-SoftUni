@@ -10,6 +10,16 @@ export default function hbsConfig(app) {
                 let starHtml = '';
                 starHtml += '&#x2605;'.repeat(stars);
                 return new Handlebars.SafeString(starHtml);
+            },
+            getCharacterName: function (characters, movieId) {
+                const character = characters.find(char => {
+                    if (char.movie) {
+                        if (char.movie.toString() === movieId.toString()) {
+                            return char;
+                        }
+                    }
+                });
+                return character ? character.characterName : 'Unknown';
             }
         }
     }));

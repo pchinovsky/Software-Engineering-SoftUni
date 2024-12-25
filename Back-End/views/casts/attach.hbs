@@ -12,6 +12,16 @@
                         <option value={{_id}} name={{name}}>{{name}}</option>
                     {{/each}}
                 </select>
+                <div>
+                    <label for="character">Character Name</label>
+                    <input
+                        type="text"
+                        id="character"
+                        name="character"
+                        placeholder="Character name in the movie"
+                        required
+                    />
+                </div>
                 <div id="center-btn">
                     <button id="create-btn">Add Cast</button>
                 </div>

@@ -28,33 +28,52 @@ const createMovie = async (movie) => {
 };
 
 const search = async (query) => {
-    let movies = await getAll();
-    console.log('movies - ', movies);
-    console.log('query - ', query);
+    // let movies = await getAll().lean();
+    // console.log('movies - ', movies);
+    // console.log('query - ', query);
 
-    let filteredMovies = movies.filter(m => {
-        // match - cond to check if each movie is returned
-        // if more than one query is entered, and movie matches one, but not the other, won't be returned
-        let match = true;
-        if (query.title) {
-            match = match && m.title.toLowerCase().includes(query.title.toLowerCase());
-        }
-        if (query.genre) {
-            match = match && m.genre.toLowerCase().includes(query.genre.toLowerCase());
-        }
-        if (query.year) {
-            match = match && m.year.toString() === query.year.toString();
-        }
-        return match;
-    });
+    // let filteredMovies = movies.filter(m => {
+    //     // match - cond to check if each movie is returned
+    //     // if more than one query is entered, and movie matches one, but not the other, won't be returned
+    //     let match = true;
 
-    console.log('filtered movies - ', filteredMovies);
+    //     if (query.title) {
+    //         // match = match && m.title.toLowerCase().includes(query.title.toLowerCase());
+    //         filter.title = query.title.toLowerCase();
+    //     }
+
+    //     if (query.genre) {
+    //         // match = match && m.genre.toLowerCase().includes(query.genre.toLowerCase());
+    //         // match = match && m.where('genre').equals(query.genre.toLowerCase());
+    //         filter.genre = query.genre.toLowerCase();
+    //     }
+    //     if (query.year) {
+    //         // match = match && m.year.toString() === query.year.toString();
+    //         match = match && m.where('year').equals(query.year);
+    //     }
+    //     return match;
+    // });
+
+    // console.log('filtered movies - ', filteredMovies);
 
 
-    if (query.title || query.genre || query.year) {
-        movies = filteredMovies;
+    // if (query.title || query.genre || query.year) {
+    //     movies = filteredMovies;
+    // }
+
+    let filter = {};
+
+    if (query.title) {
+        filter.title = { $regex: query.title, $options: 'i' };
+    }
+    if (query.genre) {
+        filter.genre = query.genre.toLowerCase();
+    }
+    if (query.year) {
+        filter.year = query.year;
     }
 
+    const movies = await Movie.find(filter).lean();
     return movies;
 };
 

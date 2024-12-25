@@ -6,7 +6,7 @@ const movieSchema = new mongoose.Schema({
     director: { type: String, required: true },
     year: { type: Number, required: true, min: 1900, max: 2022 },
     imageURL: { type: String, required: true, match: /^https?:\/\// },
-    rating: { type: Number, required: true },
+    rating: { type: Number, required: true, min: 1, max: 10 },
     description: { type: String, required: true, maxlength: 300 },
     casts: [{ type: mongoose.Types.ObjectId, ref: 'Cast' }]
 });

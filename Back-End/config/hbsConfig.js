@@ -5,10 +5,10 @@ export default function hbsConfig(app) {
     app.engine('hbs', handlebars.engine({
         extname: 'hbs',
         helpers: {
-            renderStars: function (stars) {
+            renderStars: function (rating) {
+                const stars = Math.floor(rating / 2);
                 let starHtml = '';
                 starHtml += '&#x2605;'.repeat(stars);
-                // return parsed html - 
                 return new Handlebars.SafeString(starHtml);
             }
         }

@@ -24,7 +24,7 @@ router.get('/details/:id', async (req, res) => {
 
     // direct casts access without .populate();
     const castsAll = await castService.getAll().lean();
-    const movieCasts = movie.casts?.map(castId => castsAll.find(cast => cast._id.toString() === castId.toString()));
+    // const movieCasts = movie.casts?.map(castId => castsAll.find(cast => cast._id.toString() === castId.toString()));
 
     // res.render('details', { movie, movieCasts });
     res.render('details', { movie });

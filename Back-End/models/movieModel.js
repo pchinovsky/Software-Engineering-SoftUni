@@ -8,7 +8,8 @@ const movieSchema = new mongoose.Schema({
     imageURL: { type: String, required: true, match: /^https?:\/\// },
     rating: { type: Number, required: true, min: 1, max: 10 },
     description: { type: String, required: true, maxlength: 300 },
-    casts: [{ type: mongoose.Types.ObjectId, ref: 'Cast' }]
+    casts: [{ type: mongoose.Types.ObjectId, ref: 'Cast' }],
+    creatorId: { type: mongoose.Types.ObjectId, ref: 'User' },
 });
 
 // cast: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Cast' }]

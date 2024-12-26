@@ -21,7 +21,7 @@ const castSchema = new mongoose.Schema({
 
 // const Cast = mongoose.model('Movie', castSchema);
 
-// fixed the  Cannot overwrite `Movie` model once compiled error - 
+// fixed the  Cannot overwrite `Movie` model once compiled error - checking if model is defined - 
 const Cast = mongoose.models.Cast || mongoose.model('Cast', castSchema);
 
 export default Cast;

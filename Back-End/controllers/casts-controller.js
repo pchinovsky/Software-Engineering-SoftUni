@@ -1,13 +1,14 @@
 import { Router } from 'express';
 import castService from '../services/castService.js';
 import movieService from '../services/movieService.js';
+import requireAuth from '../middleware/requireAuth.js';
 const router = Router();
 
 router.get('/create', (req, res) => {
     res.render('casts/create');
 });
 
-router.post('/create', async (req, res) => {
+router.post('/create', requireAuth, async (req, res) => {
     const castData = req.body;
     await castService.createCast(castData);
     res.redirect(`/`);

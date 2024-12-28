@@ -6,6 +6,10 @@ const characterSchema = new mongoose.Schema({
     _id: false,
 });
 
+characterSchema.virtual('movieStr').get(function () {
+    return this.movie.toString();
+});
+
 const castSchema = new mongoose.Schema({
     name: { type: String, required: true },
     age: { type: Number, required: true, min: 0, max: 120 },

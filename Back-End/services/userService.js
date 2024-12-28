@@ -6,11 +6,11 @@ const createUser = async (userData) => {
     return User.create(userData);
 };
 
-const getUserByUsername = async (email) => {
-    return User.find(email);
+const getUserByEmail = async (email) => {
+    return User.findOne({ email });
 };
 
 export default {
     createUser,
-    getUserByUsername
+    getUserByEmail
 }

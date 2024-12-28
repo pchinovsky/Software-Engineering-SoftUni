@@ -1,4 +1,5 @@
 import Movie from "../models/movieModel.js";
+import mongoose from "mongoose";
 
 // could unite with the search fn - 
 const getAll = () => Movie.find();
@@ -13,11 +14,14 @@ const getOne = (id) => {
             path: 'casts',
             populate: {
                 path: 'characters',
-                match: { movie: id },
-                select: 'characterName',
-            }
+                match: { movie: new mongoose.Types.ObjectId(id) },
+                select: 'characterName movie',
+            },
         })
+        .lean();
 };
+
+
 
 // const getOne = (id) => {
 //     Movie.findById(id)
@@ -39,6 +43,14 @@ const getOne = (id) => {
 
 const createMovie = async (movie) => {
     return await Movie.create(movie);
+};
+
+const updateMovie = async (id, movie) => {
+    return await Movie.findByIdAndUpdate(id, movie);
+};
+
+const deleteMovie = async (id) => {
+    return await Movie.findByIdAndDelete(id);
 };
 
 const search = async (query) => {
@@ -95,5 +107,7 @@ export default {
     getAll,
     getOne,
     createMovie,
+    updateMovie,
+    deleteMovie,
     search
 }

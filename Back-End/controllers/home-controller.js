@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import movieService from '../services/movieService.js';
 import castService from '../services/castService.js';
+import checkOwner from '../middleware/checkOwner.js';
+import mongoose from 'mongoose';
 const router = Router();
 
 router.get('/', async (req, res) => {
@@ -15,12 +17,23 @@ router.get('/about', (req, res) => {
     res.render('about');
 });
 
-router.get('/details/:id', async (req, res) => {
+router.get('/details/:id', checkOwner, async (req, res) => {
     const id = req.params.id;
     // console.log('id - ', id);
 
-    const movie = await movieService.getOne(id).lean();
-    // console.log(movie);
+    // const objectId = new mongoose.Types.ObjectId(id);
+
+    const movie = await movieService.getOne(id);
+    console.log('movie - ', movie);
+    console.log('movie.casts - ', JSON.stringify(movie.casts, null, 2));
+
+    // manual character name filtering (removing .lean from the getOne call)
+    // all attempts to match cast movie id to movie id by objId - str conversions in the service fail
+    movie.casts.forEach(cast => {
+        cast.characters = cast.characters.filter(character =>
+            character.movie.toString() === id.toString()
+        );
+    });
 
     // direct casts access without .populate();
     const castsAll = await castService.getAll().lean();

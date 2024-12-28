@@ -25,8 +25,12 @@
                     Description:
                     {{movie.description}}
                 </p>
-                <a class="details" href="/casts/attach/{{movie._id}}">Attach
+                {{#if isOwner}}
+                <a class="details" href="/casts/attach/{{movie._id}}" style="display: inline-block;">Attach
                     Cast</a>
+                <a class="details" href="/movies/edit/{{movie._id}}" style="display: inline-block;">Edit</a>
+                <a class="details" href="/movies/delete/{{movie._id}}" style="display: inline-block;">Delete</a>
+                {{/if}}
             </div>
         </div>
         <div class="card_right">
@@ -51,6 +55,10 @@
                     {{/each}}
                 </div>
             </div>
+        {{else}}
+            <div class="no-cast">
+                <p class="no-offer">There are no casts added yet</p>
+            <div class="no-cast">
         {{/each}}
 
     </div>

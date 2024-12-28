@@ -10,5 +10,4 @@ export default function expressConfig(app) {
     app.use(express.urlencoded({ extended: false }));
     app.use(cookieParser());
     app.use(checkAuth);
-    // app.use(checkOwner);
 }

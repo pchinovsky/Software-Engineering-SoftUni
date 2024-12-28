@@ -24,8 +24,8 @@ router.get('/details/:id', checkOwner, async (req, res) => {
     // const objectId = new mongoose.Types.ObjectId(id);
 
     const movie = await movieService.getOne(id);
-    console.log('movie - ', movie);
-    console.log('movie.casts - ', JSON.stringify(movie.casts, null, 2));
+    // console.log('movie - ', movie);
+    // console.log('movie.casts - ', JSON.stringify(movie.casts, null, 2));
 
     // manual character name filtering (removing .lean from the getOne call)
     // all attempts to match cast movie id to movie id by objId - str conversions in the service fail

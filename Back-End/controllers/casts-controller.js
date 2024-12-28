@@ -29,8 +29,8 @@ router.post('/attach/:id', async (req, res) => {
     const character = req.body.character;
     const castId = req.body.cast;
 
-    console.log('castId - ', castId);
-    console.log('character - ', character);
+    // console.log('castId - ', castId);
+    // console.log('character - ', character);
 
 
 

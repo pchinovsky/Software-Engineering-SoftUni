@@ -21,17 +21,12 @@ router.get('/register', (req, res) => {
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
-    const user = userService.getUserByUsername(email);
+    // if (!isValid) {
+    //     return res.render('auth/login', { error: { message: 'Invalid password' } });
+    // }
+    const token = await userService.authenticateUser(email, password);
 
-    const isValid = await bcrypt.compare(password, user.password);
-
-    if (!isValid) {
-        return res.render('auth/login', { error: { message: 'Invalid password' } });
-    }
-
-    const payload = { email, password: hash };
-    const token = jwt.sign(payload, secret);
-    res.cookie('auth', token);
+    res.cookie('auth', token, { httpOnly: true });
 
     res.redirect('/');
 });
@@ -39,19 +34,18 @@ router.post('/login', async (req, res) => {
 router.post('/register', async (req, res) => {
     const { email, password } = req.body;
 
-    const salt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(password, salt);
-    const payload = { email, password: hash };
+    await userService.createUser({ email, password });
 
-    const user = await userService.createUser({ email, password: hash });
+    const token = await userService.authenticateUser(email, password);
 
-    const token = jwt.sign(payload, secret);
-    res.cookie('auth', token);
+    res.cookie('auth', token, { httpOnly: true });
 
     res.redirect('/');
 });
 
 router.get('/logout', (req, res) => {
+    res.clearCookie('auth');
+    res.redirect('/');
 });
 
 export default router;

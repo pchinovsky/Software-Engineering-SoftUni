@@ -1,25 +1,25 @@
 import jwt from 'jsonwebtoken';
 import userService from '../services/userService.js';
-
-const secret = '0000';
+import { secret } from "../config/constants.js";
 
 export async function checkAuth(req, res, next) {
     const token = req.cookies.auth;
     if (token) {
         try {
             const decoded = jwt.verify(token, secret);
-
             const user = await userService.getUserByEmail(decoded.email);
             res.locals.isAuthenticated = true;
-            res.locals.username = decoded.email;
             req.user = user;
+            next();
         } catch (err) {
             res.locals.isAuthenticated = false;
+            res.clearCookie('auth');
+            res.redirect('/auth/login');
         }
     } else {
         res.locals.isAuthenticated = false;
+        next();
     }
-    next();
 }
 
 export default checkAuth;

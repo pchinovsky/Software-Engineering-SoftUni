@@ -32,9 +32,9 @@ router.post('/login', async (req, res) => {
 });
 
 router.post('/register', async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password, confirmPassword } = req.body;
 
-    await userService.createUser({ email, password });
+    await userService.createUser({ email, password, confirmPassword });
 
     const token = await userService.authenticateUser(email, password);
 

@@ -4,8 +4,9 @@ import jwt from 'jsonwebtoken';
 import { secret } from "../config/constants.js";
 
 const createUser = async (userData) => {
-    const user = await getUserByEmail(email);
-    if (user) {
+    // const user = await getUserByEmail(email);
+    const userCount = await User.countDocuments({ email: userData.email });
+    if (userCount > 0) {
         throw new Error('User already exists');
     }
     return User.create(userData);

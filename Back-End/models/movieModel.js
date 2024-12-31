@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const movieSchema = new mongoose.Schema({
     title: {
         type: String,
-        required: true,
+        required: [true, 'Title is required.'],
         minlength: [5, 'Title must contain at least 5 characters.'],
         match: [/^[a-zA-Z0-9 ]{5,}$/, 'Title must contain only alpha numeric characters.']
     },
@@ -41,7 +41,7 @@ const movieSchema = new mongoose.Schema({
         type: String,
         required: true,
         minlength: [20, 'Description must contain at least 20 characters.'],
-        match: [/^[a-zA-Z0-9 ]{20,}$/, 'Description must contain only alpha numeric characters.']
+        match: [/^[a-zA-Z0-9 .,!?'-]{20,}$/, 'Description must contain only alpha numeric characters.']
     },
     casts: [{
         type: mongoose.Types.ObjectId,

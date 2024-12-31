@@ -9,9 +9,11 @@
     <body>
         <div id="box">
 
-            <div class="error-container">
-                <p></p>
-            </div>
+            {{#if error}}
+                <div class="error-container">
+                    <p>{{error}}</p>
+                </div>
+            {{/if}}
 
             <nav>
                 <img src="/static/img/logo.webp" alt="logo" />

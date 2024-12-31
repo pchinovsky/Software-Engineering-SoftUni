@@ -20,10 +20,10 @@ export async function checkOwner(req, res, next) {
 
         if (movie.creatorId.toString() === userId.toString()) {
             res.locals.isOwner = true;
-            next();
         } else {
             res.locals.isOwner = false;
         }
+        next();
     } catch (err) {
         console.log(err);
     }

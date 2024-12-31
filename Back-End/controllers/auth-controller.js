@@ -7,8 +7,6 @@ import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
 
 const router = Router();
-const secret = '0000';
-
 
 router.get('/login', (req, res) => {
     res.render('auth/login');
@@ -21,26 +19,28 @@ router.get('/register', (req, res) => {
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
-    // if (!isValid) {
-    //     return res.render('auth/login', { error: { message: 'Invalid password' } });
-    // }
-    const token = await userService.authenticateUser(email, password);
-
-    res.cookie('auth', token, { httpOnly: true });
-
-    res.redirect('/');
+    try {
+        const token = await userService.authenticateUser(email, password);
+        res.cookie('auth', token, { httpOnly: true });
+        res.redirect('/');
+    } catch (err) {
+        const error = extractErrorMsg(err);
+        res.render('auth/login', { error });
+    }
 });
 
 router.post('/register', async (req, res) => {
     const { email, password, confirmPassword } = req.body;
 
-    await userService.createUser({ email, password, confirmPassword });
-
-    const token = await userService.authenticateUser(email, password);
-
-    res.cookie('auth', token, { httpOnly: true });
-
-    res.redirect('/');
+    try {
+        await userService.createUser({ email, password, confirmPassword });
+        const token = await userService.authenticateUser(email, password);
+        res.cookie('auth', token, { httpOnly: true });
+        res.redirect('/');
+    } catch (err) {
+        const error = extractErrorMsg(err);
+        res.render('auth/register', { error });
+    }
 });
 
 router.get('/logout', (req, res) => {

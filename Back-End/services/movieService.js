@@ -26,7 +26,8 @@ const createMovie = async (movie) => {
 };
 
 const updateMovie = async (id, movie) => {
-    return await Movie.findByIdAndUpdate(id, movie);
+    // return await Movie.findByIdAndUpdate(id, movie);
+    return await Movie.findByIdAndUpdate(id, movie, { new: true, runValidators: true });
 };
 
 const deleteMovie = async (id) => {

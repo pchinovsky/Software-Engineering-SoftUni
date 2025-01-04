@@ -1,15 +1,28 @@
 import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 import { formatDate } from '../../utils/dateUtils';
+import UserDetails from '../../UserDetails/UserDetails';
+import { useContext } from 'react';
+import { UserDetailsContext } from '../../UserDetailsContext';
 
 export default function UserItem({ user }) {
-  console.log('USER ---', user);
+  // console.log('USER ---', user);
+  const [showDetails, setShowDetails] = useState(false);
+  const { showUserDetails } = useContext(UserDetailsContext);
 
+  function toggleDetails() {
+    setShowDetails((prev) => !prev);
+  }
   const formattedDate = formatDate(user.createdAt);
 
   return (
     <tr>
       <td>
-        <img src={user.imageUrl} alt="Peter's profile" className="image" />
+        <img
+          src={user.imageUrl}
+          alt={`${user.firstName}'s profile picture.`}
+          className="image"
+        />
       </td>
       <td>{user.firstName}</td>
       <td>{user.lastName}</td>
@@ -51,7 +64,11 @@ export default function UserItem({ user }) {
             />
           </svg>
         </button>
-        <button className="btn info-btn" title="Info">
+        <button
+          onClick={() => showUserDetails(user)}
+          className="btn info-btn"
+          title="Info"
+        >
           <svg
             aria-hidden="true"
             focusable="false"

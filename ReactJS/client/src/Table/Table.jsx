@@ -1,18 +1,23 @@
 import { useEffect, useState } from 'react';
 import UserItem from './UserItem/UserItem';
+import UserDetails from '../UserDetails/UserDetails';
 
 export default function Table() {
   const url = 'http://localhost:3030/jsonstore/users';
   const [users, setUsers] = useState([]);
-  useEffect(() => {
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('DATA ---', Object.values(data));
+  const [showDetails, setShowDetails] = useState(false);
 
-        const usersArray = Object.values(data);
-        setUsers(usersArray);
-      });
+  function toggleDetails() {
+    setShowDetails((prev) => !prev);
+  }
+
+  useEffect(() => {
+    (async function fetchData() {
+      const res = await fetch(url);
+      const data = await res.json();
+      const usersArray = Object.values(data);
+      setUsers(usersArray);
+    })();
   }, []);
 
   return (
@@ -182,6 +187,7 @@ d="M506.3 417l-213.3-364c-16.33-28-57.54-28-73.98 0l-213.2 364C-10.59 444.9 9.84
             <UserItem key={user._id} user={user} />
           ))}
         </tbody>
+        {showDetails && <UserDetails user={user} onClose={toggleDetails} />}
       </table>
     </div>
   );

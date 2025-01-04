@@ -8,12 +8,20 @@ import Pagination from '../Pagination/Pagination.jsx';
 import UserDetails from '../UserDetails/UserDetails.jsx';
 import Form from '../Form/Form.jsx';
 import DeleteUser from '../DeleteUser/DeleteUser.jsx';
+import { UserDetailsContext } from '../UserDetailsContext.jsx';
+import { useContext } from 'react';
 
 export default function Card() {
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const { selectedUser } = useContext(UserDetailsContext);
+
   function openForm() {
     setIsFormOpen(true);
   }
+  function closeForm() {
+    setIsFormOpen(false);
+  }
+
   return (
     <section className="card users-container">
       <Search />
@@ -23,8 +31,8 @@ export default function Card() {
       </button>
       ;
       <Pagination />
-      <UserDetails />
-      {isFormOpen && <Form />}
+      {selectedUser && <UserDetails />}
+      {isFormOpen && <Form onClose={closeForm} />}
       <DeleteUser />
     </section>
   );

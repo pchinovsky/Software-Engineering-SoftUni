@@ -1,13 +1,13 @@
-export default function Form() {
+export default function Form({ onClose }) {
   return (
     <>
       <div className="overlay">
-        <div className="backdrop" />
+        <div className="backdrop" onClick={onClose} />
         <div className="modal">
           <div className="user-container">
             <header className="headers">
               <h2>Edit User/Add User</h2>
-              <button className="btn close">
+              <button onClick={onClose} className="btn close">
                 <svg
                   aria-hidden="true"
                   focusable="false"
@@ -119,7 +119,12 @@ export default function Form() {
                 <button id="action-save" className="btn" type="submit">
                   Save
                 </button>
-                <button id="action-cancel" className="btn" type="button">
+                <button
+                  id="action-cancel"
+                  onClick={onClose}
+                  className="btn"
+                  type="button"
+                >
                   Cancel
                 </button>
               </div>

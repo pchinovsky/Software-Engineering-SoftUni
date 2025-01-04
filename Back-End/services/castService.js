@@ -33,7 +33,7 @@ const attach = async (movieId, castId, character) => {
         cast.characters.push({ movie: movieId, characterName: character });
         await cast.save();
     }
-    return Movie.findByIdAndUpdate(movieId, { $push: { casts: castId } });
+    return Movie.findByIdAndUpdate(movieId, { $push: { casts: castId } }, { new: true, runValidators: true });
 };
 
 // const createCast = async (castData) => {

@@ -1,4 +1,34 @@
+import { useState, useContext } from 'react';
+import { UserDetailsContext } from '../UserDetailsContext';
+
 export default function Search() {
+  const [query, setQuery] = useState('');
+  const [searchCriteria, setSearchCriteria] = useState('');
+  const { users, setUsers, filteredUsers, setFilteredUsers } =
+    useContext(UserDetailsContext);
+
+  const handleQueryChange = (e) => {
+    setQuery(e.target.value);
+  };
+
+  const handleCriteriaChange = (e) => {
+    setSearchCriteria(e.target.value);
+  };
+
+  const clearQuery = () => {
+    setQuery('');
+    setFilteredUsers(users);
+  };
+
+  const filter = (e) => {
+    e.preventDefault();
+    setFilteredUsers(
+      users.filter((user) =>
+        user[searchCriteria]?.toLowerCase().includes(query.toLowerCase())
+      )
+    );
+  };
+
   return (
     <form className="search-form">
       <h2>
@@ -23,26 +53,37 @@ export default function Search() {
         <input
           type="text"
           placeholder="Please, select the search criteria"
-          name="search"
+          name="query"
+          value={query}
+          onChange={handleQueryChange}
         />
-        {/* <!-- Show the clear button only if input field length !== 0 --> */}
-        <button className="btn close-btn">
-          <i className="fa-solid fa-xmark"></i>
-        </button>
+        {query.length > 0 && (
+          <button onClick={clearQuery} className="btn close-btn">
+            <i className="fa-solid fa-xmark"></i>
+          </button>
+        )}
 
-        <button className="btn" title="Please, select the search criteria">
+        <button
+          onClick={filter}
+          className="btn"
+          title="Please, select the search criteria"
+        >
           <i className="fa-solid fa-magnifying-glass"></i>
         </button>
       </div>
 
       <div className="filter">
         <span>Search Criteria:</span>
-        <select name="criteria" className="criteria">
+        <select
+          name="criteria"
+          className="criteria"
+          onChange={handleCriteriaChange}
+        >
           <option value="">Not selected</option>
-          <option value="">First Name</option>
-          <option value="">Last Name</option>
-          <option value="">Email</option>
-          <option value="">Phone</option>
+          <option value="firstName">First Name</option>
+          <option value="lastName">Last Name</option>
+          <option value="email">Email</option>
+          <option value="phoneNumber">Phone</option>
         </select>
       </div>
     </form>

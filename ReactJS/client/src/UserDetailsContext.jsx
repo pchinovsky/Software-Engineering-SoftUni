@@ -6,6 +6,7 @@ export const UserDetailsContext = createContext();
 
 export const UserDetailsProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
 
   const [selectedUser, setSelectedUser] = useState(null);
   const [userToEdit, setUserToEdit] = useState(null);
@@ -21,6 +22,7 @@ export const UserDetailsProvider = ({ children }) => {
       const data = await res.json();
       const usersArray = Object.values(data);
       setUsers(usersArray);
+      setFilteredUsers(usersArray);
     })();
   }, []);
 
@@ -65,6 +67,8 @@ export const UserDetailsProvider = ({ children }) => {
       value={{
         users,
         setUsers,
+        filteredUsers,
+        setFilteredUsers,
         selectedUser,
         showUserDetails,
         hideUserDetails,

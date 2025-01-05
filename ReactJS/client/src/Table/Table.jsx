@@ -6,11 +6,12 @@ import { UserDetailsContext } from '../UserDetailsContext';
 
 export default function Table() {
   const url = baseUrl;
-  // const [users, setUsers] = useState([]);
-  const { users } = useContext(UserDetailsContext);
+  const { users, filteredUsers } = useContext(UserDetailsContext);
   const [showDetails, setShowDetails] = useState(false);
 
   console.log('users in table - ', users);
+
+  const filterOn = filteredUsers.length !== users.length;
 
   function toggleDetails() {
     setShowDetails((prev) => !prev);
@@ -188,11 +189,10 @@ d="M506.3 417l-213.3-364c-16.33-28-57.54-28-73.98 0l-213.2 364C-10.59 444.9 9.84
           </tr>
         </thead>
         <tbody>
-          {users.map((user) => (
+          {(filterOn ? filteredUsers : users).map((user) => (
             <UserItem key={user._id} user={user} />
           ))}
         </tbody>
-        {showDetails && <UserDetails user={user} onClose={toggleDetails} />}
       </table>
     </div>
   );

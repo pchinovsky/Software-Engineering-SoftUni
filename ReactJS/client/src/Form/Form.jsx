@@ -1,13 +1,107 @@
-export default function Form({ onClose }) {
+import { useContext, useState, useEffect } from 'react';
+import { UserDetailsContext } from '../UserDetailsContext';
+import { baseUrl } from '../constants';
+
+export default function Form({ user, mode, onClose }) {
+  const { stopEditUser, users, setUsers } = useContext(UserDetailsContext);
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phoneNumber: '',
+    createdAt: '',
+    updatedAt: '',
+    address: {
+      country: '',
+      city: '',
+      street: '',
+      streetNumber: '',
+    },
+  });
+
+  useEffect(() => {
+    if (mode === 'edit' && user) {
+      setFormData((prevData) => ({
+        ...prevData,
+        ...user,
+        address: {
+          country: user.address?.country || '',
+          city: user.address?.city || '',
+          street: user.address?.street || '',
+          streetNumber: user.address?.streetNumber || '',
+        },
+      }));
+    }
+  }, [mode, user]);
+
+  async function handleSubmit(e) {
+    const currentDate = new Date().toISOString();
+    e.preventDefault();
+    if (mode === 'edit') {
+      const url = `${baseUrl}/${user._id}`;
+      const res = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ...formData, updatedAt: currentDate }),
+      });
+      const updatedUser = await res.json();
+      setUsers((prevUsers) =>
+        prevUsers.map((u) => (u._id === updatedUser._id ? updatedUser : u))
+      );
+    } else if (mode === 'add') {
+      const url = baseUrl;
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          createdAt: currentDate,
+          updatedAt: currentDate,
+        }),
+      });
+      const newUser = await res.json();
+      setUsers((prevUsers) => [...prevUsers, newUser]);
+    }
+    onClose();
+  }
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    if (name.includes('.')) {
+      const [field, subfield] = name.split('.');
+      setFormData((prevData) => ({
+        ...prevData,
+        [field]: {
+          ...prevData[field],
+          [subfield]: value,
+        },
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
+  };
+
+  const onCancel = () => {
+    onClose();
+  };
+
   return (
     <>
       <div className="overlay">
-        <div className="backdrop" onClick={onClose} />
+        <div className="backdrop" onClick={onCancel} />
         <div className="modal">
           <div className="user-container">
             <header className="headers">
-              <h2>Edit User/Add User</h2>
-              <button onClick={onClose} className="btn close">
+              <h2>{mode === 'add' ? 'Add User' : 'Edit User'}</h2>
+              <button onClick={onCancel} className="btn close">
                 <svg
                   aria-hidden="true"
                   focusable="false"
@@ -25,7 +119,7 @@ export default function Form({ onClose }) {
                 </svg>
               </button>
             </header>
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="form-row">
                 <div className="form-group">
                   <label htmlFor="firstName">First name</label>
@@ -33,7 +127,13 @@ export default function Form({ onClose }) {
                     <span>
                       <i className="fa-solid fa-user" />
                     </span>
-                    <input id="firstName" name="firstName" type="text" />
+                    <input
+                      id="firstName"
+                      name="firstName"
+                      value={formData.firstName}
+                      onChange={handleChange}
+                      type="text"
+                    />
                   </div>
                 </div>
                 <div className="form-group">
@@ -42,7 +142,13 @@ export default function Form({ onClose }) {
                     <span>
                       <i className="fa-solid fa-user" />
                     </span>
-                    <input id="lastName" name="lastName" type="text" />
+                    <input
+                      id="lastName"
+                      name="lastName"
+                      type="text"
+                      value={formData.lastName}
+                      onChange={handleChange}
+                    />
                   </div>
                 </div>
               </div>
@@ -53,7 +159,13 @@ export default function Form({ onClose }) {
                     <span>
                       <i className="fa-solid fa-envelope" />
                     </span>
-                    <input id="email" name="email" type="text" />
+                    <input
+                      id="email"
+                      name="email"
+                      type="text"
+                      value={formData.email}
+                      onChange={handleChange}
+                    />
                   </div>
                 </div>
                 <div className="form-group">
@@ -62,7 +174,13 @@ export default function Form({ onClose }) {
                     <span>
                       <i className="fa-solid fa-phone" />
                     </span>
-                    <input id="phoneNumber" name="phoneNumber" type="text" />
+                    <input
+                      id="phoneNumber"
+                      name="phoneNumber"
+                      type="text"
+                      value={formData.phoneNumber}
+                      onChange={handleChange}
+                    />
                   </div>
                 </div>
               </div>
@@ -72,7 +190,13 @@ export default function Form({ onClose }) {
                   <span>
                     <i className="fa-solid fa-image" />
                   </span>
-                  <input id="imageUrl" name="imageUrl" type="text" />
+                  <input
+                    id="imageUrl"
+                    name="imageUrl"
+                    type="text"
+                    value={formData.imageUrl}
+                    onChange={handleChange}
+                  />
                 </div>
               </div>
               <div className="form-row">
@@ -82,7 +206,13 @@ export default function Form({ onClose }) {
                     <span>
                       <i className="fa-solid fa-map" />
                     </span>
-                    <input id="country" name="country" type="text" />
+                    <input
+                      id="country"
+                      name="address.country"
+                      type="text"
+                      value={formData.address.country}
+                      onChange={handleChange}
+                    />
                   </div>
                 </div>
                 <div className="form-group">
@@ -91,7 +221,13 @@ export default function Form({ onClose }) {
                     <span>
                       <i className="fa-solid fa-city" />
                     </span>
-                    <input id="city" name="city" type="text" />
+                    <input
+                      id="city"
+                      name="address.city"
+                      type="text"
+                      value={formData.address.city}
+                      onChange={handleChange}
+                    />
                   </div>
                 </div>
               </div>
@@ -102,7 +238,13 @@ export default function Form({ onClose }) {
                     <span>
                       <i className="fa-solid fa-map" />
                     </span>
-                    <input id="street" name="street" type="text" />
+                    <input
+                      id="street"
+                      name="address.street"
+                      type="text"
+                      value={formData.address.street}
+                      onChange={handleChange}
+                    />
                   </div>
                 </div>
                 <div className="form-group">
@@ -111,7 +253,13 @@ export default function Form({ onClose }) {
                     <span>
                       <i className="fa-solid fa-house-chimney" />
                     </span>
-                    <input id="streetNumber" name="streetNumber" type="text" />
+                    <input
+                      id="streetNumber"
+                      name="address.streetNumber"
+                      type="text"
+                      value={formData.address.streetNumber}
+                      onChange={handleChange}
+                    />
                   </div>
                 </div>
               </div>
@@ -121,7 +269,7 @@ export default function Form({ onClose }) {
                 </button>
                 <button
                   id="action-cancel"
-                  onClick={onClose}
+                  onClick={onCancel}
                   className="btn"
                   type="button"
                 >

@@ -13,14 +13,29 @@ import { useContext } from 'react';
 
 export default function Card() {
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const { selectedUser } = useContext(UserDetailsContext);
+  const { selectedUser, stopEditUser, userToDelete } =
+    useContext(UserDetailsContext);
+  const { userToEdit } = useContext(UserDetailsContext);
+
+  const mode = userToEdit ? 'edit' : 'add';
 
   function openForm() {
     setIsFormOpen(true);
   }
   function closeForm() {
     setIsFormOpen(false);
+    stopEditUser();
   }
+
+  function createUser() {}
+
+  function editUser() {}
+
+  const formProps = {
+    user: userToEdit,
+    mode: userToEdit ? 'edit' : 'add',
+    onClose: closeForm,
+  };
 
   return (
     <section className="card users-container">
@@ -32,8 +47,8 @@ export default function Card() {
       ;
       <Pagination />
       {selectedUser && <UserDetails />}
-      {isFormOpen && <Form onClose={closeForm} />}
-      <DeleteUser />
+      {(isFormOpen || userToEdit) && <Form {...formProps} />}
+      {userToDelete && <DeleteUser />}
     </section>
   );
 }

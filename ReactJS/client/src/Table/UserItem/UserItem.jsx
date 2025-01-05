@@ -9,6 +9,8 @@ export default function UserItem({ user }) {
   // console.log('USER ---', user);
   const [showDetails, setShowDetails] = useState(false);
   const { showUserDetails } = useContext(UserDetailsContext);
+  const { startEditUser } = useContext(UserDetailsContext);
+  const { userToDeleteSet } = useContext(UserDetailsContext);
 
   function toggleDetails() {
     setShowDetails((prev) => !prev);
@@ -30,7 +32,11 @@ export default function UserItem({ user }) {
       <td>{user.phoneNumber}</td>
       <td>{formattedDate}</td>
       <td className="actions">
-        <button className="btn edit-btn" title="Edit">
+        <button
+          onClick={() => startEditUser(user)}
+          className="btn edit-btn"
+          title="Edit"
+        >
           <svg
             aria-hidden="true"
             focusable="false"
@@ -47,7 +53,11 @@ export default function UserItem({ user }) {
             />
           </svg>
         </button>
-        <button className="btn delete-btn" title="Delete">
+        <button
+          onClick={() => userToDeleteSet(user)}
+          className="btn delete-btn"
+          title="Delete"
+        >
           <svg
             aria-hidden="true"
             focusable="false"

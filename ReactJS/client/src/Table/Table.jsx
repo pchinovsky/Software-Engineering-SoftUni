@@ -1,24 +1,29 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import UserItem from './UserItem/UserItem';
 import UserDetails from '../UserDetails/UserDetails';
+import { baseUrl } from '../constants';
+import { UserDetailsContext } from '../UserDetailsContext';
 
 export default function Table() {
-  const url = 'http://localhost:3030/jsonstore/users';
-  const [users, setUsers] = useState([]);
+  const url = baseUrl;
+  // const [users, setUsers] = useState([]);
+  const { users } = useContext(UserDetailsContext);
   const [showDetails, setShowDetails] = useState(false);
+
+  console.log('users in table - ', users);
 
   function toggleDetails() {
     setShowDetails((prev) => !prev);
   }
 
-  useEffect(() => {
-    (async function fetchData() {
-      const res = await fetch(url);
-      const data = await res.json();
-      const usersArray = Object.values(data);
-      setUsers(usersArray);
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async function fetchData() {
+  //     const res = await fetch(url);
+  //     const data = await res.json();
+  //     const usersArray = Object.values(data);
+  //     setUsers(usersArray);
+  //   })();
+  // }, []);
 
   return (
     <div className="table-wrapper">

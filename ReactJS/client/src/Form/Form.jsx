@@ -1,9 +1,10 @@
 import { useContext, useState, useEffect } from 'react';
-import { UserDetailsContext } from '../UserDetailsContext';
+import { UserDetailsContext } from '../contexts/UserDetailsContext';
 import { baseUrl } from '../constants';
 
 export default function Form({ user, mode, onClose }) {
-  const { stopEditUser, users, setUsers } = useContext(UserDetailsContext);
+  const { stopEditUser, users, setUsers, setFilteredUsers } =
+    useContext(UserDetailsContext);
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -65,6 +66,7 @@ export default function Form({ user, mode, onClose }) {
       });
       const newUser = await res.json();
       setUsers((prevUsers) => [...prevUsers, newUser]);
+      setFilteredUsers(users);
     }
     onClose();
   }

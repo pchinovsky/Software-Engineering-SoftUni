@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { UserDetailsContext } from '../UserDetailsContext';
+import { UserDetailsContext } from '../contexts/UserDetailsContext';
 import { baseUrl } from '../constants';
 
 export default function DeleteUser() {

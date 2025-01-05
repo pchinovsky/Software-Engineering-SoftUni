@@ -8,7 +8,7 @@ import Pagination from '../Pagination/Pagination.jsx';
 import UserDetails from '../UserDetails/UserDetails.jsx';
 import Form from '../Form/Form.jsx';
 import DeleteUser from '../DeleteUser/DeleteUser.jsx';
-import { UserDetailsContext } from '../UserDetailsContext.jsx';
+import { UserDetailsContext } from '../contexts/UserDetailsContext.jsx';
 import { useContext } from 'react';
 
 export default function Card() {

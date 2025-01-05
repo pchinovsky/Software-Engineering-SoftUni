@@ -1,18 +1,51 @@
+import { useContext } from 'react';
+import { PaginationContext } from '../contexts/PaginationContext';
+import { UserDetailsContext } from '../contexts/UserDetailsContext';
+
 export default function Pagination() {
+  const { currentPage, setCurrentPage, itemsPerPage, setItemsPerPage } =
+    useContext(PaginationContext);
+  const { users } = useContext(UserDetailsContext);
+
+  const totalPages = Math.ceil(users.length / itemsPerPage);
+
+  const handlePageChange = (newPage) => {
+    if (newPage > 0 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+    }
+  };
+
+  const handleLimitChange = (e) => {
+    setItemsPerPage(Number(e.target.value));
+    setCurrentPage(1);
+  };
+
   return (
     <div className="pagination position">
       <div className="limits">
         <span>Items per page:</span>
-        <select name="limit" className="limit" value={5}>
+        <select
+          value={itemsPerPage}
+          onChange={handleLimitChange}
+          name="limit"
+          className="limit"
+        >
           <option value={5}>5</option>
-          <option value={5}>10</option>
-          <option value={5}>15</option>
-          <option value={5}>20</option>
+          <option value={10}>10</option>
+          <option value={15}>15</option>
+          <option value={20}>20</option>
         </select>
       </div>
-      <p className="pages">1 - 1 of 1</p>
+      <p className="pages">
+        Page {currentPage} of {totalPages}
+      </p>
       <div className="actions">
-        <button className="btn" title="First Page">
+        <button
+          onClick={() => handlePageChange(1)}
+          disabled={currentPage === 1}
+          className="btn"
+          title="First Page"
+        >
           <svg
             aria-hidden="true"
             focusable="false"
@@ -29,7 +62,12 @@ export default function Pagination() {
             />
           </svg>
         </button>
-        <button className="btn" title="Previous Page">
+        <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="btn"
+          title="Previous Page"
+        >
           <svg
             aria-hidden="true"
             focusable="false"
@@ -46,7 +84,12 @@ export default function Pagination() {
             />
           </svg>
         </button>
-        <button className="btn" title="Next Page">
+        <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className="btn"
+          title="Next Page"
+        >
           <svg
             aria-hidden="true"
             focusable="false"
@@ -63,7 +106,12 @@ export default function Pagination() {
             />
           </svg>
         </button>
-        <button className="btn" title="Last Page">
+        <button
+          onClick={() => handlePageChange(totalPages)}
+          disabled={currentPage === totalPages}
+          className="btn"
+          title="Last Page"
+        >
           <svg
             aria-hidden="true"
             focusable="false"

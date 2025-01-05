@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { formatDate } from '../../utils/dateUtils';
 import UserDetails from '../../UserDetails/UserDetails';
 import { useContext } from 'react';
-import { UserDetailsContext } from '../../UserDetailsContext';
+import { UserDetailsContext } from '../../contexts/UserDetailsContext';
 
 export default function UserItem({ user }) {
   // console.log('USER ---', user);

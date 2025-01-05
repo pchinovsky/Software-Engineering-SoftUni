@@ -1,6 +1,6 @@
 import { createContext, useState } from 'react';
 import { useEffect } from 'react';
-import { baseUrl } from './constants';
+import { baseUrl } from '../constants';
 
 export const UserDetailsContext = createContext();
 
@@ -13,6 +13,10 @@ export const UserDetailsProvider = ({ children }) => {
   const [userToDelete, setUserToDelete] = useState(null);
 
   console.log('selectedUser initially:', selectedUser);
+
+  useEffect(() => {
+    setFilteredUsers(users);
+  }, [users]);
 
   useEffect(() => {
     const url = baseUrl;

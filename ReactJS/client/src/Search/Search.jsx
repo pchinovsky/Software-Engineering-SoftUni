@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { UserDetailsContext } from '../UserDetailsContext';
+import { UserDetailsContext } from '../contexts/UserDetailsContext';
 
 export default function Search() {
   const [query, setQuery] = useState('');

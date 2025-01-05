@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { UserDetailsContext } from '../UserDetailsContext';
+import { UserDetailsContext } from '../contexts/UserDetailsContext';
 import { formatDate } from '../utils/dateUtils';
 
 export default function UserDetails() {

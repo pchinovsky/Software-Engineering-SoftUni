@@ -2,20 +2,28 @@ import { useContext, useEffect, useState } from 'react';
 import UserItem from './UserItem/UserItem';
 import UserDetails from '../UserDetails/UserDetails';
 import { baseUrl } from '../constants';
-import { UserDetailsContext } from '../UserDetailsContext';
+import { UserDetailsContext } from '../contexts/UserDetailsContext';
+import { PaginationContext } from '../contexts/PaginationContext';
 
 export default function Table() {
-  const url = baseUrl;
   const { users, filteredUsers } = useContext(UserDetailsContext);
-  const [showDetails, setShowDetails] = useState(false);
+  const { currentPage, itemsPerPage } = useContext(PaginationContext);
+  // const [showDetails, setShowDetails] = useState(false);
 
   console.log('users in table - ', users);
 
   const filterOn = filteredUsers.length !== users.length;
 
-  function toggleDetails() {
-    setShowDetails((prev) => !prev);
-  }
+  const activeUsers = filterOn ? filteredUsers : users;
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+
+  const paginatedUsers = activeUsers.slice(startIndex, endIndex);
+
+  // function toggleDetails() {
+  //   setShowDetails((prev) => !prev);
+  // }
 
   // useEffect(() => {
   //   (async function fetchData() {
@@ -189,7 +197,7 @@ d="M506.3 417l-213.3-364c-16.33-28-57.54-28-73.98 0l-213.2 364C-10.59 444.9 9.84
           </tr>
         </thead>
         <tbody>
-          {(filterOn ? filteredUsers : users).map((user) => (
+          {paginatedUsers.map((user) => (
             <UserItem key={user._id} user={user} />
           ))}
         </tbody>

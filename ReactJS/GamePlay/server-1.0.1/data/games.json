@@ -1,0 +1,26 @@
+{
+    "2ec2b977-eac7-4d58-aaaf-eb6719352445": {
+        "title": "Counter Strike",
+        "category": "Action",
+        "maxLevel": "4",
+        "imageUrl": "https://th.bing.com/th/id/R.f6ec87885089b2ab258ddc957f2bc956?rik=IfrOsCjmc%2bNKCw&riu=http%3a%2f%2f3.bp.blogspot.com%2f-aJeW4W4T_ac%2fUuqV1zHiK6I%2fAAAAAAAAAqI%2fotGkthqHtFg%2fs1600%2f83832-counter-strike-condition-zero-windows-screenshot-title-screens.jpg&ehk=shfSbx%2fSCHKoBErwQgjlagvkSP%2f%2fEQpTTvFll55nXFE%3d&risl=&pid=ImgRaw&r=0",
+        "summary": "The current widespread Counter-Strike 1.6 original version was released in 2003. The original classic version is the most popular. In Cs 1.6 original version is put only standard players, weapons, ammunition models and standard sounds.",
+        "_id": "2ec2b977-eac7-4d58-aaaf-eb6719352445"
+    },
+    "2fa47d02-c862-4195-8c16-c822b722cef0": {
+        "title": "Diablo",
+        "category": "Slow and boring",
+        "maxLevel": "11",
+        "imageUrl": "https://th.bing.com/th/id/R.b1b7c3e253f3336f9f6837dfb19d0885?rik=%2f4OI%2fh2WFC6sDA&pid=ImgRaw&r=0",
+        "summary": "Diablo II is a 2000 action role-playing game developed by Blizzard North and published by Blizzard Entertainment for Microsoft Windows, Classic Mac OS, and OS X.",
+        "_id": "2fa47d02-c862-4195-8c16-c822b722cef0"
+    },
+    "d9b814b3-71da-4ba5-ad41-9dbff150aae7": {
+        "title": "Starcraft",
+        "category": "Some hydras",
+        "maxLevel": "2",
+        "imageUrl": "https://libris.to/media/jacket/20828296_starcraft-frontline-volume-4.jpg",
+        "summary": "Whether you prefer a cinematic story campaign, best-in-class multiplayer competition, specialized custom games in the Arcade, or social and collaborative Co-op, StarCraft II has a mode for you.",
+        "_id": "d9b814b3-71da-4ba5-ad41-9dbff150aae7"
+    }
+}

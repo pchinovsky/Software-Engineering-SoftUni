@@ -37,7 +37,7 @@ function App() {
                             element={<Register />}
                         />
                         <Route
-                            path="/details/:gameDetails"
+                            path="/details/:gameId"
                             element={<Details />}
                         />
                     </Routes>

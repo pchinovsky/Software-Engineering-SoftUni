@@ -1,18 +1,34 @@
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../../api/catalogue-api";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import Comment from "../comments/Comment";
+import CommentCreate from "../comments/CommentCreate";
+import { CommentsContext } from "../../contexts/CommentsContext";
 
 export default function Details() {
     const { gameId } = useParams();
     const [game, setGame] = useState({});
+    const [gameComments, setGameComments] = useState([]);
+    // const [comments, setComments] = useState([]);
+    const { comments, getCommentsByGameId } =
+        useContext(CommentsContext);
     const navigate = useNavigate();
     useEffect(() => {
         (async () => {
+            // const comments = await api.getComments(gameId);
+            const filteredComments = comments.filter(
+                (comment) => comment.gameId === gameId
+            );
             const game = await api.getGameById(gameId);
             setGame(game);
+            setGameComments(filteredComments);
+            // setComments(comments);
+            // getCommentsByGameId(gameId);
         })();
-    }, [gameId]);
+    }, [gameId, comments]);
+
+    console.log("comments - ", comments);
 
     async function handleDel() {
         await api.delGame(gameId);
@@ -38,24 +54,23 @@ export default function Details() {
                 {/* Bonus ( for Guests and Users ) */}
                 <div className="details-comments">
                     <h2>Comments:</h2>
-                    <ul>
-                        {/* list all comments for current game (If any) */}
-                        <li className="comment">
-                            <p>
-                                Content: I rate this one
-                                quite highly.
-                            </p>
-                        </li>
-                        <li className="comment">
-                            <p>Content: The best game.</p>
-                        </li>
-                    </ul>
-                    {/* Display paragraph: If there are no games in the database */}
-                    <p className="no-comment">
-                        No comments.
-                    </p>
+                    {gameComments.length > 0 ? (
+                        <ul>
+                            {gameComments.map((comment) => (
+                                <Comment
+                                    key={comment._id}
+                                    comment={
+                                        comment.comment
+                                    }
+                                />
+                            ))}
+                        </ul>
+                    ) : (
+                        <p className="no-comment">
+                            No comments yet.
+                        </p>
+                    )}
                 </div>
-                {/* Edit/Delete buttons ( Only for creator of this game )  */}
                 <div className="buttons">
                     <Link
                         to={`/edit/${game._id}`}
@@ -72,23 +87,7 @@ export default function Details() {
                     </a>
                 </div>
             </div>
-            {/* Bonus */}
-            {/* Add Comment ( Only for logged-in users, which is not creators of the current game ) */}
-            <article className="create-comment">
-                <label>Add new comment:</label>
-                <form className="form">
-                    <textarea
-                        name="comment"
-                        placeholder="Comment......"
-                        defaultValue={""}
-                    />
-                    <input
-                        className="btn submit"
-                        type="submit"
-                        defaultValue="Add Comment"
-                    />
-                </form>
-            </article>
+            <CommentCreate gameId={game._id} />
         </section>
     );
 }

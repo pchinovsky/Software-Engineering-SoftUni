@@ -1,16 +1,23 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import api from "../../api/catalogue-api";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Details() {
     const { gameId } = useParams();
     const [game, setGame] = useState({});
+    const navigate = useNavigate();
     useEffect(() => {
         (async () => {
             const game = await api.getGameById(gameId);
             setGame(game);
         })();
-    }, []);
+    }, [gameId]);
+
+    async function handleDel() {
+        await api.delGame(gameId);
+        navigate("/");
+    }
 
     return (
         <section id="game-details">
@@ -50,10 +57,17 @@ export default function Details() {
                 </div>
                 {/* Edit/Delete buttons ( Only for creator of this game )  */}
                 <div className="buttons">
-                    <a href="#" className="button">
+                    <Link
+                        to={`/edit/${game._id}`}
+                        className="button"
+                    >
                         Edit
-                    </a>
-                    <a href="#" className="button">
+                    </Link>
+                    <a
+                        onClick={handleDel}
+                        href="#"
+                        className="button"
+                    >
                         Delete
                     </a>
                 </div>

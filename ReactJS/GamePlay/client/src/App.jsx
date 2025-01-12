@@ -7,6 +7,7 @@ import Catalogue from "./components/catalogue/Catalogue";
 import Create from "./components/create/Create";
 import { Routes, Route } from "react-router-dom";
 import Details from "./components/details/Details";
+import Edit from "./components/edit/Edit";
 
 function App() {
     return (
@@ -39,6 +40,10 @@ function App() {
                         <Route
                             path="/details/:gameId"
                             element={<Details />}
+                        />
+                        <Route
+                            path="/edit/:gameId"
+                            element={<Edit />}
                         />
                     </Routes>
                 </main>

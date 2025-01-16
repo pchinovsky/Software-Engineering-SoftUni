@@ -9,7 +9,9 @@ export default function Home() {
     useEffect(() => {
         (async () => {
             const games = await api.getGames();
+            // const games = await api.getGamesLatest();
             setGames(games.slice(-3));
+            // setGames(games);
         })();
     }, []);
     return (

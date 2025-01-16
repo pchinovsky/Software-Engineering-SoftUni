@@ -1,24 +1,37 @@
 import { useState, useEffect } from "react";
 import api from "../../api/catalogue-api";
 import { useNavigate } from "react-router-dom";
+import useForm from "../../hooks/useForm";
 
 export default function Create() {
-    const [game, setGame] = useState({});
-    const navigate = useNavigate();
+    // const [game, setGame] = useState({});
+    // const navigate = useNavigate();
 
-    function handleInputChange(e) {
-        const { name, value } = e.target;
-        setGame((prevGame) => ({
-            ...prevGame,
-            [name]: value,
-        }));
-    }
+    // function handleInputChange(e) {
+    //     const { name, value } = e.target;
+    //     setGame((prevGame) => ({
+    //         ...prevGame,
+    //         [name]: value,
+    //     }));
+    // }
 
-    async function handleSubmit(e) {
-        e.preventDefault();
-        await api.createGame(game);
-        navigate("/catalogue");
-    }
+    // async function handleSubmit(e) {
+    //     e.preventDefault();
+    //     await api.createGame(game);
+    //     navigate("/catalogue");
+    // }
+
+    const initialValues = {
+        title: "",
+        category: "",
+        maxLevel: 0,
+        imageUrl: "",
+        summary: "",
+    };
+
+    const route = "/catalogue";
+    const { formValues, handleInputChange, handleSubmit } =
+        useForm(initialValues, api.createGame, route);
 
     return (
         <section id="create-page" className="auth">
@@ -33,7 +46,7 @@ export default function Create() {
                         id="title"
                         name="title"
                         placeholder="Enter game title..."
-                        value={game.value}
+                        value={formValues.value}
                         onChange={handleInputChange}
                     />
                     <label htmlFor="category">
@@ -44,7 +57,7 @@ export default function Create() {
                         id="category"
                         name="category"
                         placeholder="Enter game category..."
-                        value={game.category}
+                        value={formValues.category}
                         onChange={handleInputChange}
                     />
                     <label htmlFor="levels">
@@ -56,7 +69,7 @@ export default function Create() {
                         name="maxLevel"
                         min={1}
                         placeholder={1}
-                        value={game.maxLevel}
+                        value={formValues.maxLevel}
                         onChange={handleInputChange}
                     />
                     <label htmlFor="game-img">Image:</label>
@@ -65,7 +78,7 @@ export default function Create() {
                         id="imageUrl"
                         name="imageUrl"
                         placeholder="Upload a photo..."
-                        value={game.imageUrl}
+                        value={formValues.imageUrl}
                         onChange={handleInputChange}
                     />
                     <label htmlFor="summary">
@@ -74,7 +87,7 @@ export default function Create() {
                     <textarea
                         name="summary"
                         id="summary"
-                        value={game.summary}
+                        value={formValues.summary}
                         onChange={handleInputChange}
                     />
                     <input

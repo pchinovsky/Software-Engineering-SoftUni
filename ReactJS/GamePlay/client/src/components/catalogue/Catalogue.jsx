@@ -1,19 +1,22 @@
 import { useEffect, useState } from "react";
+import useFetch from "../../hooks/useFetch";
 
 import api from "../../api/catalogue-api";
 
 import Game from "./Game";
 
 export default function Catalogue() {
-    const [games, setGames] = useState([]);
+    // const [games, setGames] = useState([]);
 
-    useEffect(() => {
-        (async () => {
-            const games = await api.getGames();
-            setGames(games);
-        })();
-    }, []);
-    console.log(games);
+    // useEffect(() => {
+    //     (async () => {
+    //         const games = await api.getGames();
+    //         setGames(games);
+    //     })();
+    // }, []);
+    // console.log(games);
+
+    const { data: games } = useFetch(api.getGames, []);
 
     return (
         <section id="catalog-page">

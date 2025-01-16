@@ -2,6 +2,8 @@ import req from "./request";
 
 const getGames = async () => Object.values(await req.get('jsonstore/games'));
 
+const getGamesLatest = async () => Object.values(await req.get('data/games?sortBy=_createdOn%20desc&pageSize=3'));
+
 const getComments = async () => Object.values(await req.get(`jsonstore/comments`));
 // const getComments = async (gameId) => {
 //     const encodedGameId = encodeURIComponent(`gameId="${gameId}"`);
@@ -20,6 +22,7 @@ const delGame = async (id) => await req.del(`jsonstore/games/${id}`);
 
 export default {
     getGames,
+    getGamesLatest,
     getGameById,
     getComments,
     createGame,

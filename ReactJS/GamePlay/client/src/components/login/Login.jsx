@@ -1,7 +1,19 @@
+import useForm from "../../hooks/useForm";
+import useAuth from "../../hooks/useAuth";
+
 export default function Login() {
+    const initialValues = {
+        email: "",
+        password: "",
+    };
+    const log = useAuth.useLogin();
+    const route = "/catalogue";
+    const { formValues, handleInputChange, handleSubmit } =
+        useForm(initialValues, log, route);
+
     return (
         <section id="login-page" className="auth">
-            <form id="login">
+            <form onSubmit={handleSubmit} id="login">
                 <div className="container">
                     <div className="brand-logo" />
                     <h1>Login</h1>
@@ -11,6 +23,8 @@ export default function Login() {
                         id="email"
                         name="email"
                         placeholder="Sokka@gmail.com"
+                        value={formValues.email}
+                        onChange={handleInputChange}
                     />
                     <label htmlFor="login-pass">
                         Password:
@@ -19,6 +33,8 @@ export default function Login() {
                         type="password"
                         id="login-password"
                         name="password"
+                        value={formValues.password}
+                        onChange={handleInputChange}
                     />
                     <input
                         type="submit"

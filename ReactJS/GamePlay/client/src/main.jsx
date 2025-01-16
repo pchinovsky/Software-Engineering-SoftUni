@@ -4,11 +4,14 @@ import { BrowserRouter } from "react-router-dom";
 import { CommentsProvider } from "./contexts/CommentsContext.jsx";
 
 import App from "./App.jsx";
+import { AuthProvider } from "./contexts/AuthContext.jsx";
 
 createRoot(document.getElementById("root")).render(
-    <CommentsProvider>
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>
-    </CommentsProvider>
+    <AuthProvider>
+        <CommentsProvider>
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
+        </CommentsProvider>
+    </AuthProvider>
 );

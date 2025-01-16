@@ -6,7 +6,7 @@ function getOps(method) {
     const headers = {};
     const ops = { headers, method };
     if (method !== 'GET' && method !== 'DELETE') headers['Content-Type'] = 'application/json';
-    const token = localStorage.getItem('userToken');
+    const token = localStorage.getItem('authToken');
     if (token) headers['X-Authorization'] = token;
     return ops;
 }

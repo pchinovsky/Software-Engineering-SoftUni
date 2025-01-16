@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import authApi from "../api/auth-api";
+import { AuthContext } from "../contexts/AuthContext";
 
 function useLogin() {
     const [error, setError] = useState(null);
+    const { updateAuthData } = useContext(AuthContext);
     const log = async (data) => {
         try {
-            const res = await authApi.login(data);
-            console.log(res);
+            const authData = await authApi.login(data);
+            updateAuthData(authData);
         } catch (err) {
             setError(err);
         }
@@ -15,6 +17,22 @@ function useLogin() {
     return log;
 }
 
+function useRegister() {
+    const [error, setError] = useState(null);
+    const { updateAuthData } = useContext(AuthContext);
+    const reg = async (data) => {
+        try {
+            const authData = await authApi.register(data);
+            updateAuthData(authData);
+        } catch (err) {
+            setError(err);
+        }
+    };
+
+    return reg;
+}
+
 export default {
     useLogin,
+    useRegister,
 };

@@ -32,7 +32,22 @@ function useRegister() {
     return reg;
 }
 
+function useLogout() {
+    const { clearAuthData } = useContext(AuthContext);
+    const logout = async () => {
+        try {
+            await authApi.logout();
+            clearAuthData();
+        } catch (error) {
+            console.alert(error);
+        }
+    };
+
+    return logout;
+}
+
 export default {
     useLogin,
     useRegister,
+    useLogout,
 };

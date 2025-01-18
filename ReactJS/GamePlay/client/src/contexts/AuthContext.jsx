@@ -1,10 +1,12 @@
 import { createContext, useState } from "react";
+import usePersistedState from "../hooks/usePersistedState";
 
 export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-    const [auth, setAuth] = useState({});
-    const [isAuth, setIsAuth] = useState(false);
+    const [auth, setAuth, isAuth, setIsAuth] =
+        usePersistedState("authToken", undefined);
+    // const [isAuth, setIsAuth] = useState(false);
 
     const updateAuthData = (data) => {
         localStorage.setItem("authToken", data.accessToken);
@@ -12,11 +14,19 @@ export function AuthProvider({ children }) {
         setIsAuth(true);
     };
 
+    const clearAuthData = () => {
+        localStorage.removeItem("authToken");
+        setAuth({});
+        setIsAuth(false);
+    };
+
     const authData = {
         auth,
         setAuth,
         isAuth,
+        setIsAuth,
         updateAuthData,
+        clearAuthData,
     };
 
     return (

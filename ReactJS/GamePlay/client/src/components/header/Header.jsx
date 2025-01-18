@@ -1,10 +1,12 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
+import useAuth from "../../hooks/useAuth";
 
 export default function Header() {
     const { isAuth } = useContext(AuthContext);
-    console.log("isAuth in nav - ", isAuth);
+    // console.log("isAuth in nav - ", isAuth);
+    const logout = useAuth.useLogout();
 
     return (
         <header>
@@ -20,7 +22,9 @@ export default function Header() {
                         <Link to="/catalogue/create">
                             Create Game
                         </Link>
-                        <Link to="/logout">Logout</Link>
+                        <button onClick={logout}>
+                            Logout
+                        </button>
                     </div>
                 ) : (
                     <div id="guest">

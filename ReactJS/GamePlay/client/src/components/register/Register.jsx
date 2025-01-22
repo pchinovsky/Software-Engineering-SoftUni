@@ -1,6 +1,5 @@
 import useForm from "../../hooks/useForm";
-import useAuth from "../../hooks/useAuth";
-import authApi from "../../api/auth-api";
+import { useRegister } from "../../hooks/useAuth";
 
 export default function Register() {
     const initialValues = {
@@ -8,7 +7,7 @@ export default function Register() {
         password: "",
         rePassword: "",
     };
-    const reg = useAuth.useRegister();
+    const reg = useRegister();
     const route = "/catalogue";
     const { formValues, handleInputChange, handleSubmit } =
         useForm(initialValues, reg, route);

@@ -46,8 +46,4 @@ function useLogout() {
     return logout;
 }
 
-export default {
-    useLogin,
-    useRegister,
-    useLogout,
-};
+export { useLogin, useRegister, useLogout };

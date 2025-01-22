@@ -1,12 +1,12 @@
 import useForm from "../../hooks/useForm";
-import useAuth from "../../hooks/useAuth";
+import { useLogin } from "../../hooks/useAuth";
 
 export default function Login() {
     const initialValues = {
         email: "",
         password: "",
     };
-    const log = useAuth.useLogin();
+    const log = useLogin();
     const route = "/catalogue";
     const { formValues, handleInputChange, handleSubmit } =
         useForm(initialValues, log, route);

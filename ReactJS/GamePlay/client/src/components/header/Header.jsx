@@ -1,12 +1,12 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
-import useAuth from "../../hooks/useAuth";
+import { useLogout } from "../../hooks/useAuth";
 
 export default function Header() {
     const { isAuth } = useContext(AuthContext);
     // console.log("isAuth in nav - ", isAuth);
-    const logout = useAuth.useLogout();
+    const logout = useLogout();
 
     return (
         <header>

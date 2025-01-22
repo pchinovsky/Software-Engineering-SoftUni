@@ -4,23 +4,6 @@ import { useNavigate } from "react-router-dom";
 import useForm from "../../hooks/useForm";
 
 export default function Create() {
-    // const [game, setGame] = useState({});
-    // const navigate = useNavigate();
-
-    // function handleInputChange(e) {
-    //     const { name, value } = e.target;
-    //     setGame((prevGame) => ({
-    //         ...prevGame,
-    //         [name]: value,
-    //     }));
-    // }
-
-    // async function handleSubmit(e) {
-    //     e.preventDefault();
-    //     await api.createGame(game);
-    //     navigate("/catalogue");
-    // }
-
     const initialValues = {
         title: "",
         category: "",

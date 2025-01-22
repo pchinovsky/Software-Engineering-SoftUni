@@ -1,13 +1,19 @@
+import { useContext } from "react";
+
 function host(endpoint) {
     return `http://localhost:3030/${endpoint}`;
 }
 
-function getOps(method) {
+function getOps(method, skipAuth = false) {
     const headers = {};
     const ops = { headers, method };
     if (method !== 'GET' && method !== 'DELETE') headers['Content-Type'] = 'application/json';
     const token = localStorage.getItem('authToken');
-    if (token) headers['X-Authorization'] = token;
+    // if (token) headers['X-Authorization'] = token;
+    if (!skipAuth) {
+        const token = localStorage.getItem('authToken');
+        if (token) headers['X-Authorization'] = token;
+    }
     return ops;
 }
 
@@ -27,8 +33,8 @@ async function request(url, ops) {
         if (err instanceof SyntaxError) {
             return res;
         } else if (err.message == 'Invalid access token') {
-            console.log('Invalid session, resetting storage');
-            localStorage.clear();
+            // console.log('Invalid session, resetting storage');
+            // localStorage.clear();
             // window.location.pathname = '/';
             // adapt redirection when needed.
         } else {
@@ -41,9 +47,14 @@ async function get(endpoint) {
     return request(host(endpoint), getOps('GET'));
 }
 
-async function post(endpoint, body) {
-    const ops = getOps('POST');
+async function post(endpoint, body, skipAuth = false) {
+    console.log('skip auth in post req - ', skipAuth);
+
+    const ops = getOps('POST', skipAuth);
     ops.body = JSON.stringify(body);
+
+    console.log('ops in post req - ', ops);
+
 
     return request(host(endpoint), ops);
 }

@@ -5,18 +5,24 @@ export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
     const [auth, setAuth, isAuth, setIsAuth] =
-        usePersistedState("authToken", undefined);
-    // const [isAuth, setIsAuth] = useState(false);
+        usePersistedState("authToken", "");
 
     const updateAuthData = (data) => {
+        console.log("in auth cont - data - ", data);
+        console.log(
+            "in auth cont - data.token - ",
+            data.accessToken
+        );
+
         localStorage.setItem("authToken", data.accessToken);
-        setAuth(data);
+        // temp not keeping full user data -
+        setAuth(data.accessToken);
         setIsAuth(true);
     };
 
     const clearAuthData = () => {
         localStorage.removeItem("authToken");
-        setAuth({});
+        setAuth("");
         setIsAuth(false);
     };
 

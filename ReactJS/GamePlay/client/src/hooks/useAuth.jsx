@@ -8,6 +8,11 @@ function useLogin() {
     const log = async (data) => {
         try {
             const authData = await authApi.login(data);
+            // console.log(
+            //     "authData in useLogin - ",
+            //     authData
+            // );
+
             updateAuthData(authData);
         } catch (err) {
             setError(err);
@@ -36,8 +41,8 @@ function useLogout() {
     const { clearAuthData } = useContext(AuthContext);
     const logout = async () => {
         try {
-            await authApi.logout();
             clearAuthData();
+            await authApi.logout();
         } catch (error) {
             console.alert(error);
         }

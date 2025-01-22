@@ -1,15 +1,24 @@
-import { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../contexts/AuthContext";
+import { useState, useEffect } from "react";
 
 export default function usePersistedState(
     key,
     initialValue
 ) {
-    // const { setIsAuth } = useContext(AuthContext);
     const [isAuth, setIsAuth] = useState(false);
+
+    console.log(
+        "in persisted state - key/initVal - ",
+        key,
+        initialValue
+    );
 
     const [state, setState] = useState(() => {
         const storedValue = localStorage.getItem(key);
+        console.log(
+            "in persisted state - val? - ",
+            storedValue
+        );
+
         if (storedValue) {
             setIsAuth(true);
             return storedValue;

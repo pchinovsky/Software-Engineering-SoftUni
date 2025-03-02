@@ -1,0 +1,69 @@
+<section id="details-info">
+    <h1>
+        Details
+    </h1>
+    <div class="image">
+        <img src={{event.image}} />
+    </div>
+
+    <div class="info">
+        <div class="text">
+            <h1 id="name">
+                {{event.name}}
+            </h1>
+            <h3 id="location">
+                Location: {{event.location}}
+            </h3>
+            <p id="type">
+                Type: {{event.type}}
+            </p>
+            <p id="year">
+                <span>
+                    Year of the Event: {{event.year}}
+                </span>
+            </p>
+            <p id="interested">
+                Interested: {{interestCount
+                    event.interestedList
+                }}
+            </p>
+            <p id="description">
+                {{event.description}}
+            </p>
+        </div>
+        <div class="product-btn">
+            {{#if isAuthenticated}}
+                {{#if isOwner}}
+                    <div class="author">
+                        <a
+                            href="/events/edit/{{event._id}}"
+                            class="btn-edit"
+                        >
+                            Edit
+                        </a>
+                        <a
+                            href="/events/delete/{{event._id}}"
+                            class="btn-delete"
+                        >
+                            Delete
+                        </a>
+                    </div>
+                {{else}}
+                    {{#if isInterested}}
+                        <p class="interested-message">
+                            You've already been interested
+                            in this event!
+                        </p>
+                    {{else}}
+                        <a
+                            href="/events/interest/{{event._id}}"
+                            class="btn-interested"
+                        >
+                            Interested
+                        </a>
+                    {{/if}}
+                {{/if}}
+            {{/if}}
+        </div>
+    </div>
+</section>

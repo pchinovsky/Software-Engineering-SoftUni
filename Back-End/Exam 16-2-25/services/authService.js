@@ -1,10 +1,8 @@
 import User from "../models/userModel.js";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { secret } from "../config/constants.js";
 
 const createUser = async (userData) => {
-    // const user = await getUserByEmail(email);
     const userCount = await User.countDocuments({ email: userData.email });
     if (userCount > 0) {
         throw new Error('User already exists');
@@ -12,22 +10,30 @@ const createUser = async (userData) => {
     return User.create(userData);
 };
 
+/**
+ * Authenticates the user. 
+ * JWT token returned for a valid user.
+ * 
+ * @param {string} email 
+ * @param {string} password 
+ * @returns {Promise<Object>} 
+ */
 const authenticateUser = async (email, password) => {
 
     const user = await getUserByEmail(email);
 
     if (!user) {
-        throw new Error('No such user exists');
+        throw new Error('Invalid user or password');
     }
 
     const isValid = await bcrypt.compare(password, user.password);
 
     if (!isValid) {
-        throw new Error('Invalid password');
+        throw new Error('Invalid user or password');
     }
 
-    const payload = { email: user.email, id: user._id };
-    const token = jwt.sign(payload, secret, { expiresIn: '1h' });
+    const payload = { username: user.username, email: user.email, id: user._id };
+    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '2h' });
 
     return token;
 }

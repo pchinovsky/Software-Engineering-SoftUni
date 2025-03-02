@@ -23,11 +23,11 @@ export default function useForm(
 
     const handleSubmit = async (e) => {
         console.log("useForm - form values", formValues);
-
         e.preventDefault();
         try {
             await fetchFn(formValues);
-            navigate(route);
+            setFormValues(initialValues);
+            if (route) navigate(route);
         } catch (err) {
             setError(err);
         }

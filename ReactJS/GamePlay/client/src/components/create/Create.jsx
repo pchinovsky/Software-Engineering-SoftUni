@@ -18,6 +18,10 @@ export default function Create() {
 
     return (
         <section id="create-page" className="auth">
+            <div className="bg-blue-500 text-white p-4">
+                Test Tailwind
+            </div>
+
             <form onSubmit={handleSubmit} id="create">
                 <div className="container">
                     <h1>Create Game</h1>
